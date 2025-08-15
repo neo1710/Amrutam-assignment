@@ -25,7 +25,8 @@ doctorRoute.post("/register",doctorsValidation,validateUserRegistration, async (
             email,
             password: hashedPassword,
             specialization,
-            mode
+            mode,
+            ...req.body // Include other fields like address, availability, etc.
         });
 
         await doctor.save();
