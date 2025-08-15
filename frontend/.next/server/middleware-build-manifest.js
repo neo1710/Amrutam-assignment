@@ -1,6 +1,6 @@
 globalThis.__BUILD_MANIFEST = {
   "pages": {
-    "/": [
+    "/_app": [
       "static/chunks/node_modules_next_dist_compiled_next-devtools_index_82a36480.js",
       "static/chunks/node_modules_next_dist_compiled_ca41998d._.js",
       "static/chunks/node_modules_next_dist_shared_lib_492fcef6._.js",
@@ -8,23 +8,10 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/node_modules_next_dist_a3e9a08f._.js",
       "static/chunks/node_modules_react-dom_82bb97c6._.js",
       "static/chunks/node_modules_a80c7711._.js",
-      "static/chunks/[root-of-the-server]__2b899b90._.js",
-      "static/chunks/pages_index_5771e187._.js",
-      "static/chunks/pages_index_bccfd3cd._.js"
-    ],
-    "/_app": [
-      "static/chunks/node_modules_next_dist_compiled_next-devtools_index_82a36480.js",
-      "static/chunks/node_modules_next_dist_compiled_ca41998d._.js",
-      "static/chunks/node_modules_next_dist_shared_lib_492fcef6._.js",
-      "static/chunks/node_modules_next_dist_client_becf32a6._.js",
-      "static/chunks/node_modules_next_dist_ad6392d3._.js",
-      "static/chunks/node_modules_next_app_95ea274f.js",
-      "static/chunks/[next]_entry_page-loader_ts_f9f6e84e._.js",
-      "static/chunks/node_modules_react-dom_82bb97c6._.js",
-      "static/chunks/node_modules_f2979c3a._.js",
-      "static/chunks/[root-of-the-server]__010dee56._.js",
+      "static/chunks/[root-of-the-server]__c1cf6ad3._.js",
+      "static/chunks/styles_global_4e726297.css",
       "static/chunks/pages__app_5771e187._.js",
-      "static/chunks/pages__app_4b3c26ac._.js"
+      "static/chunks/pages__app_cc64dc2d._.js"
     ],
     "/_error": [
       "static/chunks/node_modules_next_dist_compiled_next-devtools_index_82a36480.js",
@@ -39,6 +26,18 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/[root-of-the-server]__95ff7225._.js",
       "static/chunks/pages__error_5771e187._.js",
       "static/chunks/pages__error_50fcf3db._.js"
+    ],
+    "/login": [
+      "static/chunks/node_modules_next_dist_compiled_next-devtools_index_82a36480.js",
+      "static/chunks/node_modules_next_dist_compiled_baae6b8f._.js",
+      "static/chunks/node_modules_next_dist_shared_lib_492fcef6._.js",
+      "static/chunks/node_modules_next_dist_client_becf32a6._.js",
+      "static/chunks/node_modules_next_dist_a3e9a08f._.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_f6723503._.js",
+      "static/chunks/[root-of-the-server]__572fc1b1._.js",
+      "static/chunks/pages_login_5771e187._.js",
+      "static/chunks/pages_login_549da88e._.js"
     ]
   },
   "devFiles": [],

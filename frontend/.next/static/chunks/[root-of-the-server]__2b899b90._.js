@@ -470,34 +470,47 @@ function triggerUpdate(msg) {
 }
 }),
 "[project]/pages/index.tsx [client] (ecmascript)": ((__turbopack_context__) => {
+"use strict";
 
-var { k: __turbopack_refresh__, m: module, e: exports } = __turbopack_context__;
+var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
 {
-const { jsxDEV: _jsxDEV } = __turbopack_context__.r("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
-const HomePage = ()=>{
-    return /*#__PURE__*/ _jsxDEV("div", {
+__turbopack_context__.s({
+    "default": ()=>Home
+});
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/link.js [client] (ecmascript)");
+;
+;
+function Home() {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         children: [
-            /*#__PURE__*/ _jsxDEV("h1", {
-                children: "Welcome to the Home Page"
-            }, void 0, false, {
-                fileName: "[project]/pages/index.tsx",
-                lineNumber: 5,
-                columnNumber: 7
-            }, ("TURBOPACK member replacement", __turbopack_context__.e)),
-            /*#__PURE__*/ _jsxDEV("p", {
-                children: "This is the main entry point of the application."
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                className: "text-4xl",
+                children: "Home Page"
             }, void 0, false, {
                 fileName: "[project]/pages/index.tsx",
                 lineNumber: 6,
                 columnNumber: 7
-            }, ("TURBOPACK member replacement", __turbopack_context__.e))
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$link$2e$js__$5b$client$5d$__$28$ecmascript$29$__["default"], {
+                href: "/login",
+                className: "text-blue-500 underline",
+                children: "Go to Login"
+            }, void 0, false, {
+                fileName: "[project]/pages/index.tsx",
+                lineNumber: 7,
+                columnNumber: 7
+            }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/pages/index.tsx",
-        lineNumber: 4,
+        lineNumber: 5,
         columnNumber: 5
-    }, ("TURBOPACK member replacement", __turbopack_context__.e));
-};
+    }, this);
+}
+_c = Home;
+var _c;
+__turbopack_context__.k.register(_c, "Home");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }

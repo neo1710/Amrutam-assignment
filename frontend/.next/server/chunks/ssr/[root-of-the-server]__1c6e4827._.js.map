@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 13, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Neeraj/Desktop/Amrutam-assignment/frontend/pages/_app.tsx"],"sourcesContent":["import '../styles/global.css'\r\nimport type { AppProps } from 'next/app'\r\n\r\nexport default function MyApp({ Component, pageProps }: AppProps) {\r\n  return <Component {...pageProps} />\r\n}\r\n// This file is the custom App component for Next.js, which allows you to override the\r\n//  default App behavior and add global styles or layout components."],"names":[],"mappings":";;;;;;AAGe,SAAS,MAAM,EAAE,SAAS,EAAE,SAAS,EAAY;IAC9D,qBAAO,qKAAC;QAAW,GAAG,SAAS;;;;;;AACjC,EACA,sFAAsF;CACtF,oEAAoE","debugId":null}}]
+}

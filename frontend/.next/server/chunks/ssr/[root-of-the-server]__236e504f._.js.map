@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Neeraj/Desktop/Amrutam-assignment/frontend/pages/index.tsx"],"sourcesContent":["\r\nconst HomePage = () => {\r\n  return (\r\n    <div>\r\n      <h1>Welcome to the Home Page</h1>\r\n      <p>This is the main entry point of the application.</p>\r\n    </div>\r\n  );\r\n};"],"names":[],"mappings":";AACA,MAAM,WAAW;IACf,qBACE,QAAC;;0BACC,QAAC;0BAAG;;;;;;0BACJ,QAAC;0BAAE;;;;;;;;;;;;AAGT","debugId":null}}]
-}

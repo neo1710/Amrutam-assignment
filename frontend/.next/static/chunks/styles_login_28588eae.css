@@ -1,0 +1,252 @@
+/* [project]/styles/login.css [client] (css) */
+.container {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 50%, #f3e8ff 100%);
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  display: flex;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 400px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logo {
+  background: linear-gradient(45deg, #2563eb, #7c3aed);
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+  display: inline-flex;
+}
+
+.title {
+  color: #111827;
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin: 0;
+}
+
+.form-card {
+  background: #fff;
+  border: 1px solid #f3f4f6;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, .1), 0 10px 10px -5px rgba(0, 0, 0, .04);
+}
+
+.form-content {
+  flex-direction: column;
+  gap: 24px;
+  display: flex;
+}
+
+.form-group {
+  flex-direction: column;
+  display: flex;
+}
+
+.label {
+  color: #374151;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  color: #9ca3af;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+}
+
+.input {
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  font-size: 16px;
+  transition: all .2s;
+  display: block;
+}
+
+.input:hover {
+  border-color: #9ca3af;
+}
+
+.input:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, .1);
+}
+
+.input.error {
+  background-color: #fef2f2;
+  border-color: #ef4444;
+}
+
+.password-input {
+  padding-right: 48px;
+}
+
+.password-toggle {
+  cursor: pointer;
+  color: #9ca3af;
+  background: none;
+  border: none;
+  transition: color .2s;
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+}
+
+.password-toggle:hover {
+  color: #6b7280;
+}
+
+.error-text {
+  color: #ef4444;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.help-text {
+  color: #6b7280;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.submit-btn {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(45deg, #2563eb, #7c3aed);
+  border: none;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all .2s;
+  display: flex;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: linear-gradient(45deg, #1d4ed8, #6d28d9);
+  transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.btn-icon {
+  margin-right: 8px;
+}
+
+.spinner {
+  border: 2px solid #fff;
+  border-top-color: rgba(0, 0, 0, 0);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  animation: 1s linear infinite spin;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.message {
+  border-radius: 8px;
+  margin-top: 16px;
+  padding: 16px;
+  font-size: 14px;
+}
+
+.message.success {
+  color: #166534;
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.message.error {
+  color: #dc2626;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.switch-mode {
+  text-align: center;
+  border-top: 1px solid #f3f4f6;
+  margin-top: 24px;
+  padding-top: 24px;
+}
+
+.switch-text {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.switch-link {
+  color: #2563eb;
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin-left: 8px;
+  font-weight: 500;
+  text-decoration: underline;
+  transition: color .2s;
+}
+
+.switch-link:hover {
+  color: #1d4ed8;
+}
+
+.footer {
+  text-align: center;
+  color: #9ca3af;
+  margin-top: 32px;
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .form-card {
+    padding: 24px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+}
+
+/*# sourceMappingURL=styles_login_28588eae.css.map*/

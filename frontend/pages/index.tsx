@@ -1,9 +1,10 @@
+import Link from 'next/link';
 
-const HomePage = () => {
+export default function Home() {
   return (
     <div>
-      <h1>Welcome to the Home Page</h1>
-      <p>This is the main entry point of the application.</p>
+      <h1 className="text-4xl">Home Page</h1>
+      <Link href="/login" className="text-blue-500 underline">Go to Login</Link>
     </div>
   );
-};
+}
