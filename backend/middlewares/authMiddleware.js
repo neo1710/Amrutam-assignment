@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const BkModel = require("../models/bkModel");
+// const BkModel = require("../models/bkModel");
 require("dotenv").config();
 
 const auth = async (req, res, next) => {
@@ -15,10 +15,10 @@ const auth = async (req, res, next) => {
     }
 
     // Check if token is blacklisted
-    const blacklisted = await BkModel.findOne({ token });
-    if (blacklisted) {
-      return res.status(401).json({ msg: "Token expired or blacklisted. Please log in again." });
-    }
+    // const blacklisted = await BkModel.findOne({ token });
+    // if (blacklisted) {
+    //   return res.status(401).json({ msg: "Token expired or blacklisted. Please log in again." });
+    // }
 
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);

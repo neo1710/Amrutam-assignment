@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 40, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Neeraj/Desktop/Amrutam-assignment/frontend/pages/_app.tsx"],"sourcesContent":["import { Provider } from \"react-redux\";\r\nimport \"../styles/global.css\";\r\nimport type { AppProps } from \"next/app\";\r\nimport { store } from \"../store/store\";\r\n\r\nexport default function MyApp({ Component, pageProps }: AppProps) {\r\n  return (\r\n    <Provider store={store}>\r\n      <Component {...pageProps} /></Provider>\r\n  );\r\n}\r\n\r\n// This file is the custom App component for Next.js, which allows you to override the\r\n//  default App behavior and add global styles or layout components."],"names":[],"mappings":";;;;AAAA;AAGA;;;;;;;;;;AAEe,SAAS,MAAM,EAAE,SAAS,EAAE,SAAS,EAAY;IAC9D,qBACE,qKAAC,4HAAA,CAAA,WAAQ;QAAC,OAAO,uGAAA,CAAA,QAAK;kBACpB,cAAA,qKAAC;YAAW,GAAG,SAAS;;;;;;;;;;;AAE9B,EAEA,sFAAsF;CACtF,oEAAoE","debugId":null}}]
+}

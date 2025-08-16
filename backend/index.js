@@ -5,14 +5,21 @@ const db=require("./db");
 const { port } = require("./db");
 const userRoute = require("./routes/userRoutes");
 const doctorRoute = require("./routes/doctorsRoutes");
+const appointementRoute = require("./routes/appointmentRoutes");
 
 
 const server=express();
-server.use(cors());
+server.use(cors({
+  origin: '*', // Allows all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  // Note: Remove credentials: true when using origin: '*'
+}));
 server.use(express.json());
 
 server.use(userRoute);
 server.use("/doctors",doctorRoute);
+server.use("/appointments", appointementRoute);
 
 server.get("/",(req,res)=>{
 res.status(200).send({msg:"home"});

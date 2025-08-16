@@ -7,8 +7,8 @@
   "static/chunks/node_modules_next_dist_client_becf32a6._.js",
   "static/chunks/node_modules_next_dist_a3e9a08f._.js",
   "static/chunks/node_modules_react-dom_82bb97c6._.js",
-  "static/chunks/node_modules_a80c7711._.js",
-  "static/chunks/[root-of-the-server]__c1cf6ad3._.js",
+  "static/chunks/node_modules_4951ab96._.js",
+  "static/chunks/[root-of-the-server]__7cc4cee3._.js",
   "static/chunks/styles_global_4e726297.css"
 ],
     source: "entry"

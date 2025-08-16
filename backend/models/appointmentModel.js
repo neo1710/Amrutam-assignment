@@ -35,15 +35,6 @@ const appointmentSchema = new mongoose.Schema({
   timestamps: true
 });
 
-AppointmentModel.collection.createIndex(
-  { doctorId: 1, 'timeSlot.start': 1 },
-  {
-    name: 'uniq_active_slot_per_doctor',
-    unique: true,
-    partialFilterExpression: { status: { $in: ['reserved','confirmed'] } }
-  }
-);
-
 // Pre-save hook - runs before saving appointment
 appointmentSchema.pre('save', async function(next) {
   try {
@@ -146,4 +137,14 @@ appointmentSchema.post('deleteMany', async function() {
 });
 
 const AppointmentModel = mongoose.model('Appointment', appointmentSchema);
+
+AppointmentModel.collection.createIndex(
+  { doctorId: 1, 'timeSlot.start': 1 },
+  {
+    name: 'uniq_active_slot_per_doctor',
+    unique: true,
+    partialFilterExpression: { status: { $in: ['reserved','confirmed'] } }
+  }
+);
+
 module.exports = AppointmentModel;
