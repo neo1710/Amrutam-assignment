@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, User, MapPin, Video, Phone, Check, X, AlertCircle } from 'lucide-react';
+import { authSuccess } from '../store/slices/authReducer';
+import { useDispatch } from 'react-redux';
 
 // Types
 type Doctor = {
@@ -52,6 +54,7 @@ const DoctorAppointmentSystem: React.FC = () => {
   const [otpCode, setOtpCode] = useState<string>('');
   const [reservationData, setReservationData] = useState<ReservationData | null>(null);
   const [notification, setNotification] = useState<Notification>({ type: '', message: '' });
+  const dispatch = useDispatch();
 
   // Mock API base URL - replace with your actual API
   const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -63,6 +66,16 @@ const DoctorAppointmentSystem: React.FC = () => {
     fetchDoctors();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
+
+    useEffect(() => {
+      // Check for authToken in localStorage
+      const token = localStorage.getItem('authToken');
+      const userData = localStorage.getItem('userData');
+  
+      if (token && userData) {
+         dispatch(authSuccess({ token, user: JSON.parse(userData) }));
+      }
+    }, [dispatch]);
 
   const fetchDoctors = async () => {
     setLoading(true);
@@ -225,13 +238,15 @@ const DoctorAppointmentSystem: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Doctor Appointment System</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 py-8 px-2 font-sans">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-blue-700 mb-8 md:mb-10 text-center tracking-tight">
+          Book a Doctor Appointment
+        </h1>
         
         {/* Notification */}
         {notification.message && (
-          <div className={`mb-4 p-4 rounded-lg flex items-center gap-2 ${
+          <div className={`mb-6 p-4 rounded-xl flex items-center gap-2 shadow ${
             notification.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
           }`}>
             {notification.type === 'success' ? <Check size={20} /> : <AlertCircle size={20} />}
@@ -243,15 +258,15 @@ const DoctorAppointmentSystem: React.FC = () => {
         {bookingStep === 'doctors' && (
           <div>
             {/* Filters */}
-            <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
-              <h2 className="text-xl font-semibold mb-4">Find Doctors</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white p-5 md:p-8 rounded-2xl shadow-lg mb-6 md:mb-8 border border-gray-100">
+              <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-blue-700">Find Doctors</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Specialization</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Specialization</label>
                   <select 
                     value={filters.specialization}
                     onChange={(e) => setFilters({...filters, specialization: e.target.value})}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                   >
                     <option value="">All Specializations</option>
                     <option value="Cardiology">Cardiology</option>
@@ -261,11 +276,11 @@ const DoctorAppointmentSystem: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Mode</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Mode</label>
                   <select 
                     value={filters.mode}
                     onChange={(e) => setFilters({...filters, mode: e.target.value})}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                   >
                     <option value="">All Modes</option>
                     <option value="online">Online</option>
@@ -287,36 +302,36 @@ const DoctorAppointmentSystem: React.FC = () => {
             </div>
 
             {/* Doctor Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
               {loading ? (
-                <div className="col-span-full text-center py-8">Loading doctors...</div>
+                <div className="col-span-full text-center py-12 text-blue-600 font-semibold">Loading doctors...</div>
               ) : doctors.length === 0 ? (
-                <div className="col-span-full text-center py-8 text-gray-500">No doctors found</div>
+                <div className="col-span-full text-center py-12 text-gray-400">No doctors found</div>
               ) : (
                 doctors.map((doctor) => (
-                  <div key={doctor._id} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                  <div key={doctor._id} className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300">
                     <div className="flex items-start justify-between mb-4">
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">{doctor.name}</h3>
+                        <h3 className="text-xl font-bold text-gray-900">{doctor.name}</h3>
                         <p className="text-blue-600 font-medium">{doctor.specialization}</p>
                       </div>
-                      <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      <div className={`px-3 py-1 rounded-full text-xs font-semibold capitalize ${
                         doctor.mode === 'online' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'
                       }`}>
-                        {doctor.mode === 'online' ? <Video size={12} className="inline mr-1" /> : <MapPin size={12} className="inline mr-1" />}
+                        {doctor.mode === 'online' ? <Video size={14} className="inline mr-1" /> : <MapPin size={14} className="inline mr-1" />}
                         {doctor.mode}
                       </div>
                     </div>
                     
                     {doctor.address && (
-                      <p className="text-gray-600 text-sm mb-2">
-                        <MapPin size={14} className="inline mr-1" />
+                      <p className="text-gray-600 text-sm mb-2 flex items-center">
+                        <MapPin size={16} className="inline mr-1" />
                         {doctor.address.city}, {doctor.address.state}
                       </p>
                     )}
                     
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-lg font-semibold text-gray-900">₹{doctor.consultationFee}</span>
+                      <span className="text-2xl font-bold text-blue-700">₹{doctor.consultationFee}</span>
                       {doctor.nextFreeAt && (
                         <span className="text-xs text-gray-500">
                           Next available: {formatTime(doctor.nextFreeAt)}
@@ -330,7 +345,7 @@ const DoctorAppointmentSystem: React.FC = () => {
                         setBookingStep('slots');
                         setSelectedDate(getTomorrowDate());
                       }}
-                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+                      className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition font-semibold shadow"
                     >
                       Book Appointment
                     </button>
@@ -343,22 +358,22 @@ const DoctorAppointmentSystem: React.FC = () => {
 
         {/* Slot Selection Step */}
         {bookingStep === 'slots' && selectedDoctor && (
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="bg-white p-5 md:p-8 rounded-2xl shadow-lg border border-gray-100 max-w-2xl mx-auto">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-xl font-semibold">{selectedDoctor.name}</h2>
+                <h2 className="text-2xl font-bold text-blue-700">{selectedDoctor.name}</h2>
                 <p className="text-gray-600">{selectedDoctor.specialization}</p>
               </div>
               <button
                 onClick={() => setBookingStep('doctors')}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-400 hover:text-gray-700"
               >
-                <X size={24} />
+                <X size={28} />
               </button>
             </div>
 
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Select Date</label>
+            <div className="mb-4">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Select Date</label>
               <input
                 type="date"
                 value={selectedDate}
@@ -369,31 +384,31 @@ const DoctorAppointmentSystem: React.FC = () => {
                     fetchAvailableSlots(selectedDoctor._id, e.target.value);
                   }
                 }}
-                className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition w-full max-w-xs"
               />
             </div>
 
             {selectedDate && (
               <div>
-                <h3 className="text-lg font-semibold mb-4">Available Time Slots</h3>
+                <h3 className="text-lg font-semibold mb-3 md:mb-4 text-blue-700">Available Time Slots</h3>
                 {loading ? (
-                  <div className="text-center py-4">Loading slots...</div>
+                  <div className="text-center py-4 text-blue-600">Loading slots...</div>
                 ) : availableSlots.length === 0 ? (
-                  <div className="text-center py-4 text-gray-500">No available slots for this date</div>
+                  <div className="text-center py-4 text-gray-400">No available slots for this date</div>
                 ) : (
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3 mb-5 md:mb-6">
                     {availableSlots.map((slot, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedSlot(slot)}
-                        className={`p-3 text-center rounded-md border transition-colors ${
+                        className={`p-3 text-center rounded-lg border font-semibold transition ${
                           selectedSlot === slot
                             ? 'bg-blue-600 text-white border-blue-600'
-                            : 'bg-gray-50 hover:bg-gray-100 border-gray-300'
+                            : 'bg-gray-50 hover:bg-blue-50 border-gray-300 text-blue-700'
                         }`}
                       >
-                        <Clock size={16} className="mx-auto mb-1" />
-                        <div className="text-sm font-medium">{formatTime(slot.start)}</div>
+                        <Clock size={18} className="mx-auto mb-1" />
+                        <div className="text-sm">{formatTime(slot.start)}</div>
                         <div className="text-xs text-gray-500">30 min</div>
                       </button>
                     ))}
@@ -401,9 +416,9 @@ const DoctorAppointmentSystem: React.FC = () => {
                 )}
 
                 {selectedSlot && (
-                  <div className="bg-gray-50 p-4 rounded-md mb-4">
-                    <h4 className="font-medium mb-2">Appointment Summary</h4>
-                    <div className="text-sm text-gray-600 space-y-1">
+                  <div className="bg-blue-50 p-4 rounded-xl mb-4 border border-blue-100">
+                    <h4 className="font-semibold mb-2 text-blue-900">Appointment Summary</h4>
+                    <div className="text-sm text-blue-700 space-y-1">
                       <p><strong>Doctor:</strong> {selectedDoctor.name}</p>
                       <p><strong>Date:</strong> {new Date(selectedDate).toLocaleDateString()}</p>
                       <p><strong>Time:</strong> {formatTime(selectedSlot.start)} - {formatTime(selectedSlot.end)}</p>
@@ -413,17 +428,17 @@ const DoctorAppointmentSystem: React.FC = () => {
                   </div>
                 )}
 
-                <div className="flex gap-3">
+                <div className="flex gap-4">
                   <button
                     onClick={() => setBookingStep('doctors')}
-                    className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300 transition-colors"
+                    className="flex-1 bg-gray-200 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-300 transition font-semibold"
                   >
                     Back
                   </button>
                   <button
                     onClick={reserveSlot}
                     disabled={!selectedSlot || loading}
-                    className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-semibold"
                   >
                     {loading ? 'Reserving...' : 'Reserve Slot'}
                   </button>
@@ -435,23 +450,23 @@ const DoctorAppointmentSystem: React.FC = () => {
 
         {/* OTP Confirmation Step */}
         {bookingStep === 'otp' && reservationData && (
-          <div className="bg-white p-6 rounded-lg shadow-sm max-w-md mx-auto">
+          <div className="bg-white p-5 md:p-8 rounded-2xl shadow-lg border border-gray-100 max-w-md mx-auto">
             <div className="text-center mb-6">
               <Check className="w-12 h-12 text-green-500 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold">Slot Reserved!</h2>
+              <h2 className="text-2xl font-bold text-blue-700">Slot Reserved!</h2>
               <p className="text-gray-600 text-sm mt-2">
                 Your slot has been reserved for 5 minutes. Please enter the OTP to confirm.
               </p>
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Enter OTP Code</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Enter OTP Code</label>
               <input
                 type="text"
                 value={otpCode}
                 onChange={(e) => setOtpCode(e.target.value)}
                 placeholder="Enter 6-digit OTP (use 123456 for demo)"
-                className="w-full p-3 text-center border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                 maxLength={6}
               />
               <p className="text-xs text-gray-500 mt-1 text-center">For demo: use 123456</p>
@@ -461,13 +476,13 @@ const DoctorAppointmentSystem: React.FC = () => {
               <button
                 onClick={confirmAppointment}
                 disabled={!otpCode || loading}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-semibold"
               >
                 {loading ? 'Confirming...' : 'Confirm Appointment'}
               </button>
               <button
                 onClick={resetBookingFlow}
-                className="w-full bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300 transition-colors"
+                className="w-full bg-gray-200 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-300 transition font-semibold"
               >
                 Cancel
               </button>
@@ -483,6 +498,19 @@ const DoctorAppointmentSystem: React.FC = () => {
           </div>
         )}
       </div>
+      <style jsx>{`
+        /* Fade-in animation for cards (optional, for polish) */
+        .fade-in {
+          animation: fadeIn 0.7s ease;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px);}
+          to { opacity: 1; transform: translateY(0);}
+        }
+        :global(body) {
+          font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+        }
+      `}</style>
     </div>
   );
 };

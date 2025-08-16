@@ -141,12 +141,12 @@ function MyApp({ Component, pageProps }) {
             ...pageProps
         }, void 0, false, {
             fileName: "[project]/pages/_app.tsx",
-            lineNumber: 9,
+            lineNumber: 11,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/pages/_app.tsx",
-        lineNumber: 8,
+        lineNumber: 9,
         columnNumber: 5
     }, this);
 } // This file is the custom App component for Next.js, which allows you to override the

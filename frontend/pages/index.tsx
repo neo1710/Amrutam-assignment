@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, Video, Users, Clock, ArrowRight, Star, Menu, X, User, LogOut, Heart, Shield, Award, Zap } from 'lucide-react';
-import { logout, setIsAuthenticated } from '../store/slices/authReducer';
+import { authSuccess, logout, setIsAuthenticated } from '../store/slices/authReducer';
 import Navbar from '../components/Navbar';
 
 const HomePage = () => {
@@ -12,9 +12,10 @@ console.log("User:", user);
   useEffect(() => {
     // Check for authToken in localStorage
     const token = localStorage.getItem('authToken');
-    // Assuming you have an action to set the auth token in your Redux store
-    if (token) {
-       dispatch(setIsAuthenticated(true));
+    const userData = localStorage.getItem('userData');
+
+    if (token && userData) {
+       dispatch(authSuccess({ token, user: JSON.parse(userData) }));
     }
   }, [dispatch]);
 
@@ -65,30 +66,31 @@ console.log("User:", user);
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 font-sans">
      {/* Navbar Component */}
      <Navbar/>
       {/* Enhanced Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 animate-pulse"></div>
+      <section className="pt-20 md:pt-24 pb-10 md:pb-14 px-2 sm:px-4 lg:px-8 relative overflow-hidden bg-white">
+        {/* Remove animated gradient background */}
+        {/* <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 animate-pulse"></div> */}
         <div className="max-w-7xl mx-auto relative">
           <div className="text-center">
             <div className="animate-fade-in-up">
-              <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
                 Your Health, Our{' '}
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <span className="text-blue-600">
                   Priority
                 </span>
               </h1>
             </div>
             <div className="animate-fade-in-up animation-delay-200">
-              <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-base md:text-lg text-gray-600 mb-7 max-w-2xl mx-auto leading-relaxed">
                 Connect with top healthcare professionals and book appointments instantly. 
                 Quality healthcare made simple, accessible, and affordable for everyone.
               </p>
             </div>
-            <div className="animate-fade-in-up animation-delay-400 flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/doctorAppointment" className="group inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 font-medium text-lg">
+            <div className="animate-fade-in-up animation-delay-400 flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+              <a href="/doctorAppointment" className="group inline-flex items-center bg-blue-600 text-white px-8 py-4 rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 font-medium text-lg">
                 Book Appointment
                 <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
               </a>
@@ -100,19 +102,18 @@ console.log("User:", user);
         </div>
       </section>
 
-      {/* Enhanced Features Section */}
-      <section className="py-24 bg-white relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-transparent"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+      {/* Features Section */}
+      <section className="py-10 md:py-16 bg-white relative">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 relative">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
               Why Choose Amrutam?
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base text-gray-600 max-w-2xl mx-auto">
               Experience healthcare like never before with our innovative platform
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
             {features.map((feature, i) => (
               <div 
                 key={i} 
@@ -130,20 +131,18 @@ console.log("User:", user);
         </div>
       </section>
 
-      {/* Enhanced Stats Section */}
-      <section className="py-24 bg-gradient-to-r from-blue-600 to-purple-600 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 animate-pulse"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">
+      {/* Stats Section */}
+      <section className="py-10 md:py-16 bg-gradient-to-r from-blue-600 to-purple-600 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 relative">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl font-bold text-white mb-2">
               Trusted by Thousands
             </h2>
-            <p className="text-blue-100 text-xl max-w-2xl mx-auto">
+            <p className="text-blue-100 text-base max-w-2xl mx-auto">
               Join our growing community of satisfied patients and healthcare professionals
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8 text-center">
             {stats.map((stat, i) => (
               <div 
                 key={i} 
@@ -161,17 +160,17 @@ console.log("User:", user);
       </section>
 
       {/* Enhanced Testimonials Section */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+      <section className="py-10 md:py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
               What Our Patients Say
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base text-gray-600 max-w-2xl mx-auto">
               Real stories from real patients who trust Amrutam with their healthcare
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-8">
             {[
               {
                 name: "Priya Sharma",
@@ -219,14 +218,15 @@ console.log("User:", user);
       </section>
 
       {/* Enhanced CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-blue-600 to-purple-600 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 animate-pulse"></div>
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative">
+      <section className="py-10 md:py-16 bg-gradient-to-r from-blue-600 to-purple-600 relative overflow-hidden">
+        {/* Remove gradient overlays */}
+        {/* <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 animate-pulse"></div> */}
+        <div className="max-w-4xl mx-auto text-center px-2 sm:px-4 lg:px-8 relative">
           <div className="animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Ready to take control of your health?
             </h2>
-            <p className="text-xl md:text-2xl text-blue-100 mb-10 leading-relaxed">
+            <p className="text-base md:text-lg text-blue-100 mb-8 leading-relaxed">
               Join thousands of satisfied patients who trust Amrutam for their healthcare needs. 
               Your journey to better health starts here.
             </p>
@@ -239,18 +239,19 @@ console.log("User:", user);
       </section>
 
       {/* Enhanced Footer */}
-      <footer className="bg-gray-900 text-white py-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
+      <footer className="bg-gray-900 text-white py-8 md:py-12 relative overflow-hidden font-sans">
+        {/* Remove gradient overlays */}
+        {/* <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20"></div> */}
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 relative">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 md:mb-12">
             <div className="md:col-span-2">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                  <Heart className="w-8 h-8 text-white" />
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                  <Heart className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-3xl font-bold">Amrutam</span>
+                <span className="text-xl font-bold">Amrutam</span>
               </div>
-              <p className="text-gray-300 text-lg leading-relaxed max-w-md">
+              <p className="text-gray-300 text-base leading-relaxed max-w-md">
                 Making healthcare accessible, affordable, and convenient for everyone. 
                 Your health journey starts with us.
               </p>
@@ -293,8 +294,8 @@ console.log("User:", user);
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 pt-8 text-center">
-            <p className="text-gray-400">
+          <div className="border-t border-gray-800 pt-4 md:pt-6 text-center">
+            <p className="text-gray-400 text-xs md:text-sm">
               © 2024 Amrutam. All rights reserved. Made with ❤️ for better healthcare.
             </p>
           </div>
@@ -331,6 +332,10 @@ console.log("User:", user);
 
         .group:hover .group-hover\\:scale-110 {
           transform: scale(1.1);
+        }
+
+        :global(body) {
+          font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
         }
       `}</style>
     </div>

@@ -3,6 +3,8 @@ import {
   Calendar, Clock, User, MapPin, Video, Phone, Check, X, AlertCircle, 
   CreditCard, RefreshCw, Edit3, Trash2, Eye, DollarSign, Timer
 } from 'lucide-react';
+import { authSuccess } from '../store/slices/authReducer';
+import { useDispatch } from 'react-redux';
 
 // Types
 type Doctor = {
@@ -57,7 +59,7 @@ const UserAppointments: React.FC = () => {
   const [selectedRescheduleSlot, setSelectedRescheduleSlot] = useState<Slot | null>(null);
   const [rescheduleReason, setRescheduleReason] = useState<string>('');
   const [notification, setNotification] = useState<Notification>({ type: '', message: '' });
-
+  const dispatch = useDispatch();
   // Mock API base URL - replace with your actual API
   const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL;
   
@@ -68,6 +70,16 @@ const UserAppointments: React.FC = () => {
     fetchAppointments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter, statusFilter]);
+
+      useEffect(() => {
+        // Check for authToken in localStorage
+        const token = localStorage.getItem('authToken');
+        const userData = localStorage.getItem('userData');
+    
+        if (token && userData) {
+           dispatch(authSuccess({ token, user: JSON.parse(userData) }));
+        }
+      }, [dispatch]);
 
   const fetchAppointments = async () => {
     setLoading(true);
@@ -333,13 +345,15 @@ const UserAppointments: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 py-6 px-2 font-sans">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">My Appointments</h1>
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-blue-700 mb-6 md:mb-8 text-center tracking-tight">
+          My Appointments
+        </h1>
         
         {/* Notification */}
         {notification.message && (
-          <div className={`mb-4 p-4 rounded-lg flex items-center gap-2 ${
+          <div className={`mb-6 p-4 rounded-xl flex items-center gap-2 shadow ${
             notification.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
           }`}>
             {notification.type === 'success' ? <Check size={20} /> : <AlertCircle size={20} />}
@@ -348,14 +362,14 @@ const UserAppointments: React.FC = () => {
         )}
 
         {/* Filters */}
-        <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-white p-4 md:p-6 rounded-2xl shadow-lg mb-5 md:mb-7 border border-gray-100">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Time</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Filter by Time</label>
               <select 
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
               >
                 <option value="all">All Appointments</option>
                 <option value="upcoming">Upcoming</option>
@@ -363,11 +377,11 @@ const UserAppointments: React.FC = () => {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Filter by Status</label>
               <select 
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
               >
                 <option value="">All Statuses</option>
                 <option value="reserved">Reserved</option>
@@ -380,25 +394,25 @@ const UserAppointments: React.FC = () => {
         </div>
 
         {/* Appointments List */}
-        <div className="space-y-4">
+        <div className="space-y-4 md:space-y-5">
           {loading ? (
-            <div className="text-center py-8">Loading appointments...</div>
+            <div className="text-center py-12 text-blue-600 font-semibold">Loading appointments...</div>
           ) : appointments.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">No appointments found</div>
+            <div className="text-center py-12 text-gray-400">No appointments found</div>
           ) : (
             appointments.map((appointment) => (
-              <div key={appointment._id} className="bg-white p-6 rounded-lg shadow-sm">
+              <div key={appointment._id} className="bg-white p-4 md:p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-lg font-bold text-gray-900">
                         {appointment.doctorId.name}
                       </h3>
-                      <div className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(appointment.status)}`}>
+                      <div className={`px-3 py-1 rounded-full text-xs font-semibold capitalize ${getStatusColor(appointment.status)}`}>
                         {appointment.status}
                       </div>
-                      <div className={`px-2 py-1 rounded-full text-xs font-medium ${getPaymentStatusColor(appointment.paymentStatus)}`}>
-                        <CreditCard size={12} className="inline mr-1" />
+                      <div className={`px-3 py-1 rounded-full text-xs font-semibold capitalize flex items-center gap-1 ${getPaymentStatusColor(appointment.paymentStatus)}`}>
+                        <CreditCard size={12} className="inline" />
                         {appointment.paymentStatus}
                       </div>
                     </div>
@@ -415,16 +429,16 @@ const UserAppointments: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         {appointment.mode === 'online' ? <Video size={16} /> : <MapPin size={16} />}
-                        <span>{appointment.mode}</span>
+                        <span className="capitalize">{appointment.mode}</span>
                       </div>
                     </div>
                   </div>
                   
                   <div className="flex items-center gap-3 mt-4 md:mt-0">
                     <div className="text-right">
-                      <div className="text-lg font-semibold text-gray-900">₹{appointment.consultationFee}</div>
+                      <div className="text-2xl font-bold text-blue-700">₹{appointment.consultationFee}</div>
                       {appointment.reservationExpiresAt && new Date(appointment.reservationExpiresAt) > new Date() && (
-                        <div className="text-xs text-red-600 flex items-center gap-1">
+                        <div className="text-xs text-red-600 flex items-center gap-1 mt-1">
                           <Timer size={12} />
                           Expires: {formatTime(appointment.reservationExpiresAt)}
                         </div>
@@ -435,8 +449,8 @@ const UserAppointments: React.FC = () => {
 
                 {/* Rescheduling History */}
                 {appointment.reschedulingHistory && appointment.reschedulingHistory.length > 0 && (
-                  <div className="mb-4 p-3 bg-blue-50 rounded-md">
-                    <h4 className="text-sm font-medium text-blue-900 mb-2">Rescheduling History</h4>
+                  <div className="mb-4 p-4 bg-blue-50 rounded-xl border border-blue-100">
+                    <h4 className="text-sm font-semibold text-blue-900 mb-2">Rescheduling History</h4>
                     {appointment.reschedulingHistory.map((history, index) => (
                       <div key={index} className="text-xs text-blue-700">
                         <strong>{formatDate(history.timestamp)}:</strong> Moved from {formatDate(history.oldDate)} to {formatDate(history.newDate)}
@@ -448,8 +462,8 @@ const UserAppointments: React.FC = () => {
 
                 {/* Consultation Details */}
                 {appointment.status === 'completed' && (appointment.consultationNotes || appointment.prescription) && (
-                  <div className="mb-4 p-3 bg-green-50 rounded-md">
-                    <h4 className="text-sm font-medium text-green-900 mb-2">Consultation Summary</h4>
+                  <div className="mb-4 p-4 bg-green-50 rounded-xl border border-green-100">
+                    <h4 className="text-sm font-semibold text-green-900 mb-2">Consultation Summary</h4>
                     {appointment.consultationNotes && (
                       <div className="text-sm text-green-700 mb-2">
                         <strong>Notes:</strong> {appointment.consultationNotes}
@@ -464,7 +478,7 @@ const UserAppointments: React.FC = () => {
                 )}
 
                 {/* Action Buttons */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-3 mt-2">
                   {canReschedule(appointment) && (
                     <button
                       onClick={() => {
@@ -472,9 +486,9 @@ const UserAppointments: React.FC = () => {
                         setShowRescheduleModal(true);
                         setRescheduleDate(getTomorrowDate());
                       }}
-                      className="flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition-colors text-sm"
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-semibold shadow"
                     >
-                      <RefreshCw size={14} />
+                      <RefreshCw size={16} />
                       Reschedule
                     </button>
                   )}
@@ -487,9 +501,9 @@ const UserAppointments: React.FC = () => {
                           cancelAppointment(appointment._id, reason);
                         }
                       }}
-                      className="flex items-center gap-2 px-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors text-sm"
+                      className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm font-semibold shadow"
                     >
-                      <Trash2 size={14} />
+                      <Trash2 size={16} />
                       Cancel
                     </button>
                   )}
@@ -497,9 +511,9 @@ const UserAppointments: React.FC = () => {
                   {appointment.paymentStatus === 'pending' && (
                     <button
                       onClick={() => showNotification('info', 'Payment gateway integration needed')}
-                      className="flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors text-sm"
+                      className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-semibold shadow"
                     >
-                      <DollarSign size={14} />
+                      <DollarSign size={16} />
                       Pay Now
                     </button>
                   )}
@@ -511,25 +525,25 @@ const UserAppointments: React.FC = () => {
 
         {/* Reschedule Modal */}
         {showRescheduleModal && selectedAppointment && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold">Reschedule Appointment</h2>
+          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center p-2 md:p-4 z-50">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-100">
+              <div className="p-4 md:p-6">
+                <div className="flex items-center justify-between mb-5">
+                  <h2 className="text-xl font-bold text-blue-700">Reschedule Appointment</h2>
                   <button
                     onClick={() => {
                       setShowRescheduleModal(false);
                       resetRescheduleForm();
                     }}
-                    className="text-gray-500 hover:text-gray-700"
+                    className="text-gray-400 hover:text-gray-700"
                   >
-                    <X size={24} />
+                    <X size={28} />
                   </button>
                 </div>
 
                 <div className="mb-4">
-                  <h3 className="font-medium mb-2">Current Appointment</h3>
-                  <div className="bg-gray-50 p-3 rounded-md text-sm">
+                  <h3 className="font-semibold mb-2 text-gray-700">Current Appointment</h3>
+                  <div className="bg-blue-50 p-4 rounded-xl text-sm border border-blue-100">
                     <p><strong>Doctor:</strong> {selectedAppointment.doctorId.name}</p>
                     <p><strong>Current Date:</strong> {formatDate(selectedAppointment.appointmentDate)}</p>
                     <p><strong>Current Time:</strong> {formatTime(selectedAppointment.timeSlot.start)}</p>
@@ -537,7 +551,7 @@ const UserAppointments: React.FC = () => {
                 </div>
 
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">New Date</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">New Date</label>
                   <input
                     type="date"
                     value={rescheduleDate}
@@ -548,30 +562,30 @@ const UserAppointments: React.FC = () => {
                         fetchAvailableSlotsForReschedule(selectedAppointment.doctorId._id, e.target.value);
                       }
                     }}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                   />
                 </div>
 
                 {rescheduleDate && (
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Available Time Slots</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Available Time Slots</label>
                     {loading ? (
-                      <div className="text-center py-4">Loading slots...</div>
+                      <div className="text-center py-4 text-blue-600">Loading slots...</div>
                     ) : availableSlots.length === 0 ? (
-                      <div className="text-center py-4 text-gray-500">No available slots for this date</div>
+                      <div className="text-center py-4 text-gray-400">No available slots for this date</div>
                     ) : (
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         {availableSlots.map((slot, index) => (
                           <button
                             key={index}
                             onClick={() => setSelectedRescheduleSlot(slot)}
-                            className={`p-2 text-center rounded-md border transition-colors ${
+                            className={`p-3 text-center rounded-lg border font-semibold transition ${
                               selectedRescheduleSlot === slot
                                 ? 'bg-blue-600 text-white border-blue-600'
-                                : 'bg-gray-50 hover:bg-gray-100 border-gray-300'
+                                : 'bg-gray-50 hover:bg-blue-50 border-gray-300 text-blue-700'
                             }`}
                           >
-                            <div className="text-sm font-medium">{formatTime(slot.start)}</div>
+                            <div className="text-sm">{formatTime(slot.start)}</div>
                           </button>
                         ))}
                       </div>
@@ -580,31 +594,31 @@ const UserAppointments: React.FC = () => {
                 )}
 
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Reason for Rescheduling *</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Reason for Rescheduling *</label>
                   <textarea
                     value={rescheduleReason}
                     onChange={(e) => setRescheduleReason(e.target.value)}
                     placeholder="Please provide a reason for rescheduling..."
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                     rows={3}
                     required
                   />
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex gap-4">
                   <button
                     onClick={() => {
                       setShowRescheduleModal(false);
                       resetRescheduleForm();
                     }}
-                    className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300 transition-colors"
+                    className="flex-1 bg-gray-200 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-300 transition font-semibold"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={rescheduleAppointment}
                     disabled={!selectedRescheduleSlot || !rescheduleReason || loading}
-                    className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition font-semibold"
                   >
                     {loading ? 'Rescheduling...' : 'Reschedule Appointment'}
                   </button>
@@ -614,6 +628,19 @@ const UserAppointments: React.FC = () => {
           </div>
         )}
       </div>
+      <style jsx>{`
+        /* Fade-in animation for cards (optional, for polish) */
+        .fade-in {
+          animation: fadeIn 0.7s ease;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px);}
+          to { opacity: 1; transform: translateY(0);}
+        }
+        :global(body) {
+          font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+        }
+      `}</style>
     </div>
   );
 };

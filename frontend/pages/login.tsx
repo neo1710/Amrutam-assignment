@@ -134,23 +134,23 @@ export default function AuthComponent() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 flex items-center justify-center p-2 font-sans">
       <div className="w-full max-w-md">
         {/* Logo/Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-4">
-            <User className="w-8 h-8 text-white" />
+        <div className="text-center mb-5 md:mb-7">
+          <div className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-blue-600 rounded-full mb-2 md:mb-3">
+            <User className="w-6 h-6 md:w-7 md:h-7 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900">
             {isLogin ? 'Welcome Back' : 'Create Account'}
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 mt-1 md:mt-2 text-sm">
             {isLogin ? 'Sign in to your account' : 'Join us today'}
           </p>
         </div>
 
         {/* Form */}
-        <form className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8" onSubmit={handleSubmit}>
+        <form className="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 md:p-6" onSubmit={handleSubmit}>
           <div className="space-y-6">
             {/* Name field for registration */}
             {!isLogin && (
@@ -247,7 +247,7 @@ export default function AuthComponent() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center px-4 py-3 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              className="w-full flex items-center justify-center px-4 py-3 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
@@ -287,10 +287,15 @@ export default function AuthComponent() {
         </form>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-sm text-gray-500">
-          <p>© 2025 Your App Name. All rights reserved.</p>
+        <div className="text-center mt-5 md:mt-7 text-xs md:text-sm text-gray-500">
+          <p>© 2025 Amrutam. All rights reserved.</p>
         </div>
       </div>
+      <style jsx>{`
+        :global(body) {
+          font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+        }
+      `}</style>
     </div>
   );
 }
