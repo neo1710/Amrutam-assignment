@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, Video, Users, Clock, ArrowRight, Star, Menu, X, User, LogOut, Heart, Shield, Award, Zap } from 'lucide-react';
 import { authSuccess, logout, setIsAuthenticated } from '../store/slices/authReducer';
 import Navbar from '../components/Navbar';
+import { useRouter } from 'next/router';
 
 const HomePage = () => {
 
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state: any) => state.auth);
-console.log("User:", user);
+  const router = useRouter();
+
   useEffect(() => {
     // Check for authToken in localStorage
     const token = localStorage.getItem('authToken');
@@ -24,6 +26,13 @@ console.log("User:", user);
     // Redirect to home or login page
     window.location.href = '/';
   };
+
+  // Navigation handlers
+  const goToDoctorAppointment = () => router.push('/doctorAppointment');
+  const goToLogin = () => router.push('/login');
+  const goToAppointmentManager = () => router.push('/appointmentManager');
+  const goToSpecializations = () => router.push('/specializations');
+  const goToAbout = () => router.push('/about');
 
   const features = [
     {
@@ -67,8 +76,6 @@ console.log("User:", user);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 font-sans">
-     {/* Navbar Component */}
-     <Navbar/>
       {/* Enhanced Hero Section */}
       <section className="pt-20 md:pt-24 pb-10 md:pb-14 px-2 sm:px-4 lg:px-8 relative overflow-hidden bg-white">
         {/* Remove animated gradient background */}
@@ -90,13 +97,21 @@ console.log("User:", user);
               </p>
             </div>
             <div className="animate-fade-in-up animation-delay-400 flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
-              <a href="/doctorAppointment" className="group inline-flex items-center bg-blue-600 text-white px-8 py-4 rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 font-medium text-lg">
+              <button
+                type="button"
+                onClick={goToDoctorAppointment}
+                className="group inline-flex items-center bg-blue-600 text-white px-8 py-4 rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 font-medium text-lg"
+              >
                 Book Appointment
                 <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
-              </a>
-              <a href="/login" className="inline-flex items-center bg-white text-blue-600 border-2 border-blue-600 px-8 py-4 rounded-xl hover:bg-blue-50 hover:shadow-lg transform hover:scale-105 transition-all duration-300 font-medium text-lg">
+              </button>
+              <button
+                type="button"
+                onClick={goToLogin}
+                className="inline-flex items-center bg-white text-blue-600 border-2 border-blue-600 px-8 py-4 rounded-xl hover:bg-blue-50 hover:shadow-lg transform hover:scale-105 transition-all duration-300 font-medium text-lg"
+              >
                 Join as Doctor
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -230,10 +245,14 @@ console.log("User:", user);
               Join thousands of satisfied patients who trust Amrutam for their healthcare needs. 
               Your journey to better health starts here.
             </p>
-            <a href="/doctorAppointment" className="group inline-flex items-center bg-white text-blue-600 px-10 py-5 rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-bold text-lg">
+            <button
+              type="button"
+              onClick={goToDoctorAppointment}
+              className="group inline-flex items-center bg-white text-blue-600 px-10 py-5 rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-bold text-lg"
+            >
               Book Your First Appointment
               <ArrowRight size={24} className="ml-3 group-hover:translate-x-1 transition-transform duration-200" />
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -270,10 +289,42 @@ console.log("User:", user);
             <div>
               <h4 className="font-bold mb-6 text-lg">Quick Links</h4>
               <ul className="space-y-3 text-gray-300">
-                <li><a href="/doctorAppointment" className="hover:text-white transition-colors duration-200">Find Doctors</a></li>
-                <li><a href="/appointmentManager" className="hover:text-white transition-colors duration-200">My Appointments</a></li>
-                <li><a href="/specializations" className="hover:text-white transition-colors duration-200">Specializations</a></li>
-                <li><a href="/about" className="hover:text-white transition-colors duration-200">About Us</a></li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={goToDoctorAppointment}
+                    className="hover:text-white transition-colors duration-200 bg-transparent border-none outline-none p-0 m-0 text-left"
+                  >
+                    Find Doctors
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={goToAppointmentManager}
+                    className="hover:text-white transition-colors duration-200 bg-transparent border-none outline-none p-0 m-0 text-left"
+                  >
+                    My Appointments
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={goToSpecializations}
+                    className="hover:text-white transition-colors duration-200 bg-transparent border-none outline-none p-0 m-0 text-left"
+                  >
+                    Specializations
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={goToAbout}
+                    className="hover:text-white transition-colors duration-200 bg-transparent border-none outline-none p-0 m-0 text-left"
+                  >
+                    About Us
+                  </button>
+                </li>
               </ul>
             </div>
             <div>

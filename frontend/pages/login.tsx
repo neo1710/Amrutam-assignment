@@ -4,7 +4,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { Eye, EyeOff, Mail, Lock, User, LogIn, UserPlus } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../store/store';
-import { authStart, authSuccess, authFailure } from '../store/slices/authReducer';
+import { authStart, authSuccess, authFailure, setLoading } from '../store/slices/authReducer';
 import { Router } from 'next/router';
 import { useRouter } from 'next/navigation';
 
@@ -114,6 +114,7 @@ export default function AuthComponent() {
           // After successful registration, switch to login
           setIsLogin(true);
           setFormData({ name: '', email: '', password: '' });
+          dispatch(setLoading(false));
         }
       } else {
         setMessage(data.msg || 'An error occurred');
@@ -134,7 +135,7 @@ export default function AuthComponent() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 flex items-center justify-center p-2 font-sans">
+    <div className="min-h-screen pt-24 bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 flex items-center justify-center p-2 font-sans">
       <div className="w-full max-w-md">
         {/* Logo/Header */}
         <div className="text-center mb-5 md:mb-7">

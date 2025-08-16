@@ -4,7 +4,8 @@ import {
   CreditCard, RefreshCw, Edit3, Trash2, Eye, DollarSign, Timer
 } from 'lucide-react';
 import { authSuccess } from '../store/slices/authReducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 // Types
 type Doctor = {
@@ -60,11 +61,19 @@ const UserAppointments: React.FC = () => {
   const [rescheduleReason, setRescheduleReason] = useState<string>('');
   const [notification, setNotification] = useState<Notification>({ type: '', message: '' });
   const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state: any) => state.auth);
+  const router = useRouter();
   // Mock API base URL - replace with your actual API
   const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL;
   
   // Mock token - in real app, get from localStorage or auth context
   const token = (typeof window !== 'undefined' && localStorage.getItem('authToken')) || 'mock-token';
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !isAuthenticated) {
+      router.replace('/login');
+    }
+  }, [dispatch, isAuthenticated, router]);
 
   useEffect(() => {
     fetchAppointments();
@@ -345,7 +354,7 @@ const UserAppointments: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 py-6 px-2 font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 py-6 px-2 pt-24 font-sans">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-blue-700 mb-6 md:mb-8 text-center tracking-tight">
           My Appointments

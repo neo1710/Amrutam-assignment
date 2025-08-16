@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const DoctorModel = require("../models/doctorsModel");
 const validateUserRegistration = require("../middlewares/validationMiddleware");
 const doctorsValidation = require("../middlewares/doctorsValidation");
+const AppointmentModel = require("../models/appointmentModel");
 
 const doctorRoute = Router();
 
