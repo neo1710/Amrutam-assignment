@@ -111,6 +111,8 @@ appointmentSchema.post('findOneAndDelete', async function(doc) {
   }
 });
 
+const AppointmentModel = mongoose.model('Appointment', appointmentSchema);
+
 // Post-deleteMany hook - for bulk deletions (like cleanup job)
 appointmentSchema.post('deleteMany', async function() {
   try {
@@ -135,8 +137,6 @@ appointmentSchema.post('deleteMany', async function() {
     console.error('Error cleaning up orphaned slots:', error);
   }
 });
-
-const AppointmentModel = mongoose.model('Appointment', appointmentSchema);
 
 AppointmentModel.collection.createIndex(
   { doctorId: 1, 'timeSlot.start': 1 },

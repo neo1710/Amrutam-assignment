@@ -11,9 +11,8 @@ const appointementRoute = require("./routes/appointmentRoutes");
 const server=express();
 server.use(cors({
   origin: '*', // Allows all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  // Note: Remove credentials: true when using origin: '*'
 }));
 server.use(express.json());
 
