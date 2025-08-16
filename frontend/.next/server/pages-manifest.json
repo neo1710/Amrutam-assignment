@@ -3,5 +3,7 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
+  "/appointmentManager": "pages/appointmentManager.js",
+  "/doctorAppointment": "pages/doctorAppointment.js",
   "/login": "pages/login.js"
 }

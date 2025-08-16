@@ -479,7 +479,8 @@ __turbopack_context__.s({
     "authStart": ()=>authStart,
     "authSuccess": ()=>authSuccess,
     "default": ()=>__TURBOPACK__default__export__,
-    "logout": ()=>logout
+    "logout": ()=>logout,
+    "setIsAuthenticated": ()=>setIsAuthenticated
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$reduxjs$2f$toolkit$2f$dist$2f$redux$2d$toolkit$2e$modern$2e$mjs__$5b$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs [client] (ecmascript) <locals>");
 ;
@@ -516,10 +517,13 @@ const authSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
             state.user = null;
             state.token = null;
             state.isAuthenticated = false;
+        },
+        setIsAuthenticated: (state, action)=>{
+            state.isAuthenticated = action.payload;
         }
     }
 });
-const { authStart, authSuccess, authFailure, logout } = authSlice.actions;
+const { authStart, authSuccess, authFailure, logout, setIsAuthenticated } = authSlice.actions;
 const __TURBOPACK__default__export__ = authSlice.reducer;
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);

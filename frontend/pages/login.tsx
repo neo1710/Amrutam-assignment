@@ -5,6 +5,8 @@ import { Eye, EyeOff, Mail, Lock, User, LogIn, UserPlus } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../store/store';
 import { authStart, authSuccess, authFailure } from '../store/slices/authReducer';
+import { Router } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 type FormData = {
   name: string;
@@ -26,6 +28,7 @@ export default function AuthComponent() {
     email: '',
     password: ''
   });
+  const router=useRouter()
   const [errors, setErrors] = useState<Errors>({});
   const [message, setMessage] = useState<string>('');
 
@@ -92,8 +95,9 @@ export default function AuthComponent() {
         },
         body: JSON.stringify(payload),
       });
-console.log(response)
+
       const data: any = await response.json();
+      console.log('Response:', data);
 
       if (response.ok) {
         setMessage(data.msg);
@@ -104,7 +108,8 @@ console.log(response)
           localStorage.setItem('userData', JSON.stringify(data.user));
           dispatch(authSuccess({ user: data.user, token: data.token }));
           // Redirect or update app state here
-          // Example: router.push('/dashboard');
+          // Example: 
+          router.push('/');
         } else if (!isLogin) {
           // After successful registration, switch to login
           setIsLogin(true);

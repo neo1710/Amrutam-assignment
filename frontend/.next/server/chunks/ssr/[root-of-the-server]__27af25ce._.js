@@ -38,7 +38,8 @@ __turbopack_context__.s({
     "authStart": ()=>authStart,
     "authSuccess": ()=>authSuccess,
     "default": ()=>__TURBOPACK__default__export__,
-    "logout": ()=>logout
+    "logout": ()=>logout,
+    "setIsAuthenticated": ()=>setIsAuthenticated
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxjs$2f$toolkit__$5b$external$5d$__$2840$reduxjs$2f$toolkit$2c$__esm_import$29$__ = __turbopack_context__.i("[externals]/@reduxjs/toolkit [external] (@reduxjs/toolkit, esm_import)");
 var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
@@ -79,10 +80,13 @@ const authSlice = (0, __TURBOPACK__imported__module__$5b$externals$5d2f40$reduxj
             state.user = null;
             state.token = null;
             state.isAuthenticated = false;
+        },
+        setIsAuthenticated: (state, action)=>{
+            state.isAuthenticated = action.payload;
         }
     }
 });
-const { authStart, authSuccess, authFailure, logout } = authSlice.actions;
+const { authStart, authSuccess, authFailure, logout, setIsAuthenticated } = authSlice.actions;
 const __TURBOPACK__default__export__ = authSlice.reducer;
 __turbopack_async_result__();
 } catch(e) { __turbopack_async_result__(e); } }, false);}),
