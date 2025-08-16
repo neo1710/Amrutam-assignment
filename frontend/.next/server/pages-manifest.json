@@ -4,6 +4,8 @@
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
   "/appointmentManager": "pages/appointmentManager.js",
+  "/doctor/dashboard": "pages/doctor/dashboard.js",
+  "/doctor/login": "pages/doctor/login.js",
   "/doctorAppointment": "pages/doctorAppointment.js",
   "/login": "pages/login.js"
 }

@@ -278,10 +278,15 @@ const DoctorAppointmentSystem: React.FC = () => {
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                   >
                     <option value="">All Specializations</option>
-                    <option value="Cardiology">Cardiology</option>
-                    <option value="Dermatology">Dermatology</option>
-                    <option value="Neurology">Neurology</option>
-                    <option value="Orthopedic">Orthopedic</option>
+                    <option value="Kaya Chikitsa">Kaya Chikitsa (General Medicine)</option>
+                    <option value="Shalakya Tantra">Shalakya Tantra (ENT and Ophthalmology)</option>
+                    <option value="Kaumarbhritya">Kaumarbhritya (Pediatrics and Obstetrics)</option>
+                    <option value="Agad Tantra">Agad Tantra (Toxicology)</option>
+                    <option value="Bhut Vidya">Bhut Vidya (Psychiatry)</option>
+                    <option value="Rasayan">Rasayan (Rejuvenation Therapy)</option>
+                    <option value="Vajikaran">Vajikaran (Sexology)</option>
+                    <option value="Panchakarma">Panchakarma (Detoxification)</option>
+                    <option value="Dravyaguna">Dravyaguna (Ayurvedic Pharmacology)</option>
                   </select>
                 </div>
                 <div>

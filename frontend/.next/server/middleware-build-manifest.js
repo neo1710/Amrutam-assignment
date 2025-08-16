@@ -54,6 +54,32 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/pages_appointmentManager_5771e187._.js",
       "static/chunks/pages_appointmentManager_52a0d116._.js"
     ],
+    "/doctor/dashboard": [
+      "static/chunks/node_modules_next_dist_compiled_next-devtools_index_82a36480.js",
+      "static/chunks/node_modules_next_dist_compiled_ca41998d._.js",
+      "static/chunks/node_modules_next_dist_shared_lib_492fcef6._.js",
+      "static/chunks/node_modules_next_dist_client_becf32a6._.js",
+      "static/chunks/node_modules_next_dist_a3e9a08f._.js",
+      "static/chunks/node_modules_next_router_47d9bb1c.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_71aa9de2._.js",
+      "static/chunks/[root-of-the-server]__b2b7385b._.js",
+      "static/chunks/pages_doctor_dashboard_tsx_5771e187._.js",
+      "static/chunks/pages_doctor_dashboard_tsx_5aebf219._.js"
+    ],
+    "/doctor/login": [
+      "static/chunks/node_modules_next_dist_compiled_next-devtools_index_82a36480.js",
+      "static/chunks/node_modules_next_dist_compiled_ca41998d._.js",
+      "static/chunks/node_modules_next_dist_shared_lib_492fcef6._.js",
+      "static/chunks/node_modules_next_dist_client_becf32a6._.js",
+      "static/chunks/node_modules_next_dist_a3e9a08f._.js",
+      "static/chunks/node_modules_next_router_47d9bb1c.js",
+      "static/chunks/node_modules_react-dom_82bb97c6._.js",
+      "static/chunks/node_modules_6539bb76._.js",
+      "static/chunks/[root-of-the-server]__475860e4._.js",
+      "static/chunks/pages_doctor_login_tsx_5771e187._.js",
+      "static/chunks/pages_doctor_login_tsx_eb534a29._.js"
+    ],
     "/doctorAppointment": [
       "static/chunks/[root-of-the-server]__a4836d54._.js",
       "static/chunks/node_modules_next_dist_compiled_next-devtools_index_82a36480.js",

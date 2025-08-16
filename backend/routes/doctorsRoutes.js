@@ -48,7 +48,7 @@ doctorRoute.post("/login", async (req, res) => {
             return res.status(400).send({ msg: "Doctor not found" });
         }
 
-        const match = await bcrypt.compare(password, doctor.password);
+        const match = password === doctor.password;
         if (!match) {
             return res.status(400).send({ msg: "Invalid password" });
         }

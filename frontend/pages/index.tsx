@@ -29,7 +29,7 @@ const HomePage = () => {
 
   // Navigation handlers
   const goToDoctorAppointment = () => router.push('/doctorAppointment');
-  const goToLogin = () => router.push('/login');
+  const goToLogin = () => router.push('/doctor/login');
   const goToAppointmentManager = () => router.push('/appointmentManager');
   const goToSpecializations = () => router.push('/specializations');
   const goToAbout = () => router.push('/about');
@@ -110,7 +110,7 @@ const HomePage = () => {
                 onClick={goToLogin}
                 className="inline-flex items-center bg-white text-blue-600 border-2 border-blue-600 px-8 py-4 rounded-xl hover:bg-blue-50 hover:shadow-lg transform hover:scale-105 transition-all duration-300 font-medium text-lg"
               >
-                Join as Doctor
+                Join or Login as a Doctor
               </button>
             </div>
           </div>

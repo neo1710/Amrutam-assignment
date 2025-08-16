@@ -132,9 +132,16 @@ appointmentRoute.post("/confirm/:appointmentId", authMiddleware, async (req, res
 appointmentRoute.get("/my-appointments", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
-    const { status, type } = req.query; // type: 'upcoming' | 'past'
+    const { status, type, doctorId } = req.query; // Added doctorId to query params
 
-    let filter = { userId };
+    let filter = {};
+
+    // Add userId or doctorId based on what's provided
+    if (doctorId) {
+      filter.doctorId = doctorId;
+    } else {
+      filter.userId = userId;
+    }
 
     if (status) {
       filter.status = status;
