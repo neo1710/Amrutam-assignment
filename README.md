@@ -110,5 +110,5 @@ The project uses GitHub Actions for:
 - Deployment to staging/production
 
 ## Live Demo
-- Frontend: [https://amrutam-consultation.vercel.app](https://amrutam-consultation.vercel.app)
-- Backend: [https://amrutam-api.render.com](https://amrutam-api.render.com)
+- Frontend: [https://amrutam-consultation.vercel.app](https://amrutam-assignment-virid.vercel.app/)
+- Backend: [https://amrutam-api.render.com](https://amrutam-assignment-3nui.onrender.com)
