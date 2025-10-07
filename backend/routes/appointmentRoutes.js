@@ -28,7 +28,7 @@ appointmentRoute.get("/doctor/:doctorId/available-slots", async (req, res) => {
     });
 
     // Generate available slots (assuming 30-min slots, 9 AM - 5 PM)
-    const availableSlots = generateAvailableSlots(startOfDay, bookedAppointments, doctor.availability);
+    const availableSlots = generateAvailableSlots(startOfDay, bookedAppointments, doctor.availability, doctor.slotDuration);
 
     res.status(200).send({ availableSlots });
   } catch (error) {
@@ -108,7 +108,7 @@ appointmentRoute.post("/confirm/:appointmentId", authMiddleware, async (req, res
       return res.status(400).send({ msg: "Reservation expired" });
     }
     if (appointment.status === 'confirmed') {
-      return res.status(200).send({ msg: "Already confirmed", appointment }); 
+      return res.status(200).send({ msg: "Already confirmed", appointment });
     }
     // Mock OTP validation (in real app, validate against sent OTP)
     if (otpCode !== "123456") {
@@ -250,7 +250,7 @@ appointmentRoute.patch("/reschedule/:appointmentId", authMiddleware, async (req,
 });
 
 // Helper function to generate available slots
-function generateAvailableSlots(date, bookedAppointments, doctorAvailability) {
+function generateAvailableSlots(date, bookedAppointments, doctorAvailability, slotTime) {
   const slots = [];
   const keyByIdx = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
   const availability = doctorAvailability[keyByIdx[date.getDay()]];
@@ -261,7 +261,7 @@ function generateAvailableSlots(date, bookedAppointments, doctorAvailability) {
 
   const [startHour, startMinute] = availability.start.split(':').map(Number);
   const [endHour, endMinute] = availability.end.split(':').map(Number);
-  const slotDuration = 30; // 30 minutes
+  const slotDuration = slotTime; // 30 minutes
 
   const bookedTimes = bookedAppointments.map(apt => apt.timeSlot.start.getTime());
 
