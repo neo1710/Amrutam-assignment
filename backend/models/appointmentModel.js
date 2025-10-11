@@ -21,6 +21,7 @@ const appointmentSchema = new mongoose.Schema({
   reservationExpiresAt: { type: Date },
   consultationNotes: { type: String },
   prescription: { type: String },
+  appointmentOTP: { type: String },
   symptoms: { type: String },
   consultationFee: { type: Number },
   paymentStatus: { type: String, enum: ['pending', 'paid', 'refunded'], default: 'pending' },

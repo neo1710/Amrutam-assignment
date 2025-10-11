@@ -2,6 +2,8 @@ const { Router } = require("express");
 const AppointmentModel = require("../models/appointmentModel");
 const DoctorModel = require("../models/doctorsModel");
 const authMiddleware = require("../middlewares/authMiddleware");
+const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 const appointmentRoute = Router();
 
@@ -41,6 +43,7 @@ appointmentRoute.post("/reserve", authMiddleware, async (req, res) => {
   try {
     const { doctorId, appointmentDate, timeSlot, mode } = req.body;
     const userId = req.user.id;
+    const userEmail = req.user.email;
 
     const doctor = await DoctorModel.findById(doctorId);
     if (!doctor) {
@@ -63,10 +66,30 @@ appointmentRoute.post("/reserve", authMiddleware, async (req, res) => {
       return res.status(400).send({ msg: "Slot already reserved" });
     }
 
+    const nodemailer = require("nodemailer");
+
+    const uniqueOtp = Math.floor(100000 + Math.random() * 900000).toString(); // Mock OTP generation
+    // Create a test account or replace with real credentials.
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.NODEMAILER_EMAIL,
+        pass: process.env.NODEMAILER_PASSWORD,
+      },
+    });
+
+    const info = await transporter.sendMail({
+      from: '"OTP Verification" <',
+      to: userEmail,
+      subject: "OTP Verification to confirm your appointment",
+      text: uniqueOtp, // plain‑text body
+      html: `<b>OTP ${uniqueOtp}</b>`, // HTML body
+    });
     // Create reservation with 5-minute expiry
     const reservation = new AppointmentModel({
       doctorId,
       userId,
+      appointmentOTP: uniqueOtp, // Mock OTP generation
       appointmentDate: new Date(appointmentDate),
       timeSlot: {
         start: new Date(timeSlot.start),
@@ -83,7 +106,8 @@ appointmentRoute.post("/reserve", authMiddleware, async (req, res) => {
     res.status(201).send({
       msg: "Slot reserved successfully",
       appointmentId: reservation._id,
-      expiresAt: reservation.reservationExpiresAt
+      expiresAt: reservation.reservationExpiresAt,
+      otpDetails: info, // Send OTP details for testing
     });
 
   } catch (error) {
@@ -111,7 +135,7 @@ appointmentRoute.post("/confirm/:appointmentId", authMiddleware, async (req, res
       return res.status(200).send({ msg: "Already confirmed", appointment });
     }
     // Mock OTP validation (in real app, validate against sent OTP)
-    if (otpCode !== "123456") {
+    if (otpCode !== appointment.appointmentOTP) {
       return res.status(400).send({ msg: "Invalid OTP" });
     }
 
